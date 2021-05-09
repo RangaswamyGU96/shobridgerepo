@@ -13,52 +13,41 @@ class products extends Component {
         this.state = {
             Productdata: [],
             Error: false,
-            isproductempty:false 
+            isproductempty: false
         }
 
     }
 
     componentWillMount() {
-       this.getproductdetails(); 
+        this.getproductdetails();
     }
-
-    componentDidMount() {
-        console.log("component did Mount");
-    }
-    componentDidUpdate() {
-        console.log("component did update");
-    }
-
-
-
-    getproductdetails =()=>{
+    getproductdetails = () => {
         axios.get("http://localhost:3000/products")
-        .then(response => {
-            console.log(response);
-            console.log("len--"+response.data.length);
-            if(response.data.length==0){
-                    this.setState({isproductempty:true})
-            }
-            this.setState({ Productdata : response.data });
-            console.log("product data --" + this.state.Productdata)
-        }).catch(err => {
-            console.log(err);
-            this.setState({ Error: true })
-        })
+            .then(response => {
+
+                if (response.data.length == 0) {
+                    this.setState({ isproductempty: true })
+                }
+                this.setState({ Productdata: response.data });
+
+            }).catch(err => {
+
+                this.setState({ Error: true })
+            })
 
     }
     deleteproductHandler = (id) => {
         var result = window.confirm("Want to delete?");
         if (result) {
-           axios.delete(`http://localhost:3000/products/${id}`)
-            .then(res => {
-              console.log(res);             
-             this.getproductdetails();
-              console.log("product data --" + this.state.Productdata)
-            }).catch(err => {
-                alert(err);
-            })
-        } 
+            axios.delete(`http://localhost:3000/products/${id}`)
+                .then(res => {
+
+                    this.getproductdetails();
+
+                }).catch(err => {
+                    alert(err);
+                })
+        }
     }
 
 
@@ -74,9 +63,8 @@ class products extends Component {
                 delete={() => this.deleteproductHandler(data.id)} />
         })
         return (
-            <div> 
-                 
-                 
+            <div>
+                <h2 className="text-center">Product List</h2>
                 <div className="row">
                     {prod}
                 </div>

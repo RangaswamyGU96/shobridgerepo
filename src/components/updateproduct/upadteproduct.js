@@ -11,10 +11,8 @@ class upadteproduct extends Component {
 
         this.state = {
             Upadtedata: [],
-            isallupfieldsfilled:false,
-            iserror:false
-
-
+            isallupfieldsfilled: false,
+            iserror: false
         }
     }
 
@@ -26,31 +24,30 @@ class upadteproduct extends Component {
 
     getddata = () => {
         const windowUrl = window.location.search;
-        console.log(windowUrl);
+
         const params = new URLSearchParams(windowUrl);
         const id = params.get('id');
-        console.log("params ----" + params.get('id'));
-        console.log(" tyrpeof params ----" + typeof (params));
+
 
         let url = "http://localhost:3000/products/" + id;
 
         axios.get(url)
             .then((res) => {
-                console.log(res);
-                this.setState({ Upadtedata: res.data });          
+
+                this.setState({ Upadtedata: res.data });
 
             }).catch((err) => {
-               // alert(err);
+                // alert(err);
             });
     }
 
     updateproductHandler = (event) => {
-        if(this.state.Upadtedata.name =="" && this.state.Upadtedata.description=="" && this.state.Upadtedata.price== ""){
-                this.setState({isallupfieldsfilled:true});
-                alert("all fields are mandotory")
+        if (this.state.Upadtedata.name == "" && this.state.Upadtedata.description == "" && this.state.Upadtedata.price == "") {
+            this.setState({ isallupfieldsfilled: true });
+
         }
-        else{
-             
+        else {
+
             console.log(this.state.Upadtedata);
             const postdata = this.state.Upadtedata;
             console.log(postdata);
@@ -60,15 +57,15 @@ class upadteproduct extends Component {
                     console.log(res);
                     alert("success");
                     window.location.href = '/';
-    
-                }).catch((err) => {                 
+
+                }).catch((err) => {
                     this.setState({
-                        iserror:true,
+                        iserror: true,
                     })
                 });
         }
-        
-      
+
+
     }
 
     namechangehandler = (event) => {
@@ -92,14 +89,14 @@ class upadteproduct extends Component {
                 <h2 className="text-center">Upadte Product</h2>
                 <form>
                     <div className="form-group m-2">
-                                                <label htmlFor="Productname">Product name :</label>
+                        <label htmlFor="Productname">Product name :</label>
                         <input className="form-control" id="Productname" name="Productname" type="text" value={this.state.Upadtedata.name} onChange={(event) => this.namechangehandler(event)} />
 
                     </div>
 
                     <div className="form-group m-2">
                         <label htmlFor="ProdDesc">Description :</label>
-                        <textarea className="form-control" id="ProdDesc"  name ="ProdDesc"   value={this.state.Upadtedata.description} onChange={(event) => {
+                        <textarea className="form-control" id="ProdDesc" name="ProdDesc" value={this.state.Upadtedata.description} onChange={(event) => {
                             let newarray = { ...this.state.Upadtedata };
                             newarray.description = event.target.value;
 
@@ -122,13 +119,13 @@ class upadteproduct extends Component {
 
                     </div>
                     <div className="form-group m-2">
-                        {this.state.isallupfieldsfilled &&  <p className="mandotory">All fields are mandotory</p> }
-                           
+                        {this.state.isallupfieldsfilled && <p className="mandotory">All fields are mandotory</p>}
+
 
                     </div>
 
                     <div className="form-group m-2">
-                        <button  className="btn btn-primary mt-2" onClick={() => this.updateproductHandler()}>Update</button>
+                        <button className="btn btn-primary mt-2" onClick={() => this.updateproductHandler()}>Update</button>
                     </div>
                 </form>
                 {this.state.iserror && <ErrorHandler />}

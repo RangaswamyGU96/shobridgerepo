@@ -14,46 +14,43 @@ class addproduct extends Component {
             name: "",
             description: "",
             price: "",
-            isallfieldsfilled:false,
-            isaddsuccess:false
+            isallfieldsfilled: false,
+            isaddsuccess: false
         }
 
     }
 
-    createproductHandler = (event) => {        
+    createproductHandler = (event) => {
         event.preventDefault();
 
-        if(this.state.name=="" || this.state.description =="" || this.state.price =="" ){
-                this.setState({isallfieldsfilled:true})
+        if (this.state.name == "" || this.state.description == "" || this.state.price == "") {
+            this.setState({ isallfieldsfilled: true })
         }
-        else{
-            this.setState({isallfieldsfilled:false})
+        else {
+            this.setState({ isallfieldsfilled: false })
             const postdata = {
-                
+
                 id: Math.floor(Math.random() * 100),
                 name: this.state.name,
                 description: this.state.description,
                 price: this.state.price
-    
+
             }
             console.log(postdata);
             axios.post("http://localhost:3000/products", postdata)
                 .then((res) => {
-                    console.log(res);
-                    alert("succesfully created product");
+                   
+                     
                     window.location.href = '/products';
-                    // this.props.history.push('/');
+                   
                     this.setState({
-                        isaddsuccess:true
+                        isaddsuccess: true
                     })
-    
+
                 }).catch((err) => {
                     alert(err);
                 });
-        }
-       
-
-        //alert(this.state.name + " "+ this.state.description+ "" +this.state.price );
+        } 
     }
 
     changename = (event) => {
@@ -68,18 +65,18 @@ class addproduct extends Component {
 
 
         return (
-            <div className="add-product"> 
+            <div className="add-product">
                 <form>
                     <h2 className="text-center">Add Product</h2>
 
-                    <div className="form-group m-2"> 
-                        <label  htmlFor="Productname">Product name :</label>
-                        <input className="form-control" id="Productname" type="text" value={this.state.name} required onChange={(event) => this.changename(event)} />
+                    <div className="form-group m-2">
+                        <label htmlFor="Productname">Product name :</label>
+                        <input className="form-control" placeholder="Ex: Wifi Router" id="Productname" type="text" value={this.state.name} required onChange={(event) => this.changename(event)} />
                     </div>
 
-                    <div className="form-group m-2"> 
+                    <div className="form-group m-2">
                         <label htmlFor="">Description :</label>
-                        <textarea className="form-control" id="ProdDesc" type="text"   maxLength="200" value={this.state.description} onChange={(event) => {
+                        <textarea className="form-control" placeholder="Ex: About Wifi Router" id="ProdDesc" type="text" maxLength="200" value={this.state.description} onChange={(event) => {
                             this.setState({
                                 description: event.target.value
                             });
@@ -87,15 +84,15 @@ class addproduct extends Component {
 
                     <div className="form-group m-2">
                         <label htmlFor="ProdOthInfo">Price:</label>
-                        <input className="form-control" id="ProdOthInfo" type="number" required value={this.state.price} required onChange={(event) => {
+                        <input className="form-control" placeholder="1000" id="ProdOthInfo" type="number" required value={this.state.price} required onChange={(event) => {
                             this.setState({
                                 price: event.target.value
                             });
                         }} />
                     </div>
                     <div className="form-group m-2">
-                        {this.state.isallfieldsfilled &&  <p className="mandotory">All fields are mandotory</p> }
-                           
+                        {this.state.isallfieldsfilled && <p className="mandotory">All fields are mandotory</p>}
+
 
                     </div>
 
@@ -106,7 +103,7 @@ class addproduct extends Component {
 
 
                 </form>
-                { this.state.isaddsuccess && <Redirect to="/" /> }
+                { this.state.isaddsuccess && <Redirect to="/" />}
             </div>
         );
     }
