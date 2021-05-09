@@ -1,0 +1,16 @@
+.add-product{
+    width: 60%;
+    margin: 0 auto;
+}
+
+
+@media screen and (max-width:540px) {
+    .add-product{
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+.mandotory{
+    color: red;
+    
+}
